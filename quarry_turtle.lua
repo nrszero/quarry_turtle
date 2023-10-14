@@ -1,31 +1,5 @@
---	Minecraft Mining Turtle Ore Quarry v3 by nrszero                                           
---		
---	Instructions:
---		- To start place chest on the right side of turtle on the same level 
---			and put fuel in turtle inventory. Then change, if needed, the depth and width
---			and to_bedrock variable in script and run it.
---		- To continue quarry if stopped bring turtle back to starting position
---			by chest and run script.
---		- If turtle runs out of fuel or has full inventory it will go back to start
---			and prompt for fuel or empty inventory. Then continue mining.
---		- If you want turtle to go to bedrock set the to_bedrock variable to true,
---			if not set it to false.
---                
---	Change Log:
---		- 2/16/2021: v2 Inventory check is quicker now.
---		- 2/16/2021: v3 Turtle will return to chest when inventory is full.
---		- 2/16/2021: v3.1 Inputing odd number width will work now.
---		- 2/23/2021: v3.2 Added Blacklist and going to Bedrock ability.
---		- 3/3/2021: v3.3 Won't go off course if mob or player touch it.
---		- 3/3/2021: v3.4 Changed paths of turtles to avoid collision that throw it off track.
---	To Do:
---		- Test turning off item on blacklist.
---		- Make miner detect and avoid other miners.
--- 		- How to deploy and return multiple turtles.
---		- set label if none set then place from inventory and run immediatly.
--- 		- Figure out better way than moving turtle to dodge when going down from refuel.
---			Still collide if on same level and ones going to refuel and ones not. 
--- pastebin get gNA3Zisz quarry.lua
+--	Minecraft Mining Turtle Ore Quarry v3 by nrszero                                           	
+
 --	CHANGEABLE VARIABLES
 depth = 16
 width = 84
