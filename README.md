@@ -1,7 +1,7 @@
 # quarry_turtle
  
-Minecraft Mining Turtle Ore Quarry v3 by nrszero<br><br>                                        
-	
+Minecraft Mining Turtle Ore Quarry v3 by nrszero
+
 Instructions:<br>
 	- To start place chest on the right side of turtle on the same level 
 		and put fuel in turtle inventory. Then change, if needed, the depth and width
