@@ -2,9 +2,9 @@
 
 --	CHANGEABLE VARIABLES
 depth = 16
-width = 84
-to_bedrock = false
-found_up_dig_up = false
+width = 16
+to_bedrock = true
+found_up_dig_up = true
 
 --  Blacklist Key 0: Won't Touch
 --  Blacklist Key 1: Will Drop
@@ -12,8 +12,7 @@ found_up_dig_up = false
 blacklist = {
 	["computercraft:turtle_advanced"]=0,
 	["computercraft:turtle_expanded"]=0,
-	["minecraft:stone"]=1,
-	["minecraft:dirt"]=2,
+	["minecraft:dirt"]=1,
 	["traverse:red_rock"]=1
 }
 
@@ -80,8 +79,22 @@ function empty_inv()
 	end
 end
 
+function drop_blacklisted()
+	print("Dropping Blacklisted")
+	for s=1,16,1
+	do
+		table = turtle.getItemDetail(s)
+		-- print("Debug: ", table.name)
+		if (blacklist[table.name] == 1)
+		then
+			turtle.select(s)
+			turtle.drop()
+		end
+	end
+end
+
 function check_fuel()
-	if(turtle.getFuelLevel() < 500)
+	if(turtle.getFuelLevel() < 250)
 	then
 		print("Fuel Level:", turtle.getFuelLevel())
 		print("Fuel Low. Going Back to Start")
@@ -94,10 +107,10 @@ function check_fuel()
 		if(prev_x > 0)then dig_right(prev_x) end
 		face_forward()
 	
-		print("Refuel to 500 or Greater")
+		print("Refuel to 250 or Greater")
 		print("Place Fuel in Slot 16")
 		
-		while(turtle.getFuelLevel() < 500)
+		while(turtle.getFuelLevel() < 250)
 		do
 			turtle.select(16)
 			if(turtle.refuel())
@@ -134,7 +147,7 @@ function dig_down(num)
 		success_down, data_down = turtle.inspectDown()
 		if not(blacklist[data_down.name] == 0)
 		then
-			turtle.digDown()
+			dig_success, dig_reason = turtle.digDown()
 		end
 		
 		while not(turtle.down()) 
@@ -144,7 +157,7 @@ function dig_down(num)
 		
 		y = y + 1
 	end
-	return success
+	return dig_success, dig_reason
 end 
 
 function dig_up(num)
@@ -384,8 +397,11 @@ then
 	face_forward()
 	while(to_bedrock)
 	do
-		if not(dig_down(1))
+		success, data = turtle.inspectDown()
+		if not(data.name == "minecraft:bedrock")
 		then
+			dig_down(1)
+		else
 			print("Hit Bedrock!")
 			depth = y - 5
 			to_bedrock = false
@@ -400,6 +416,7 @@ do
 	print("Depth:", y)
 
 	check_fuel()
+	drop_blacklisted()
 	check_inv_full()
 	face_forward()
 	
@@ -454,6 +471,7 @@ do
 		end
 		
 		check_fuel()
+		drop_blacklisted()
 		check_inv_full()
 		
 		-- Digs backwards if at forward edge
@@ -487,6 +505,7 @@ do
 		end
 		
 		check_fuel()
+		drop_blacklisted()
 		check_inv_full()
 	end
 end
